@@ -10,6 +10,7 @@ import time
 client = commands.Bot(command_prefix = "p/")
 client.remove_command("help")
 
+
 # ROLE SETTINGS
 admin = None
 modlog = None
@@ -19,7 +20,7 @@ welcome = None
 
 # HELP
 @client.command()
-async def help(ctx):
+async def help(ctx): # sends an embedded list of all commands
     embed = discord.Embed(title = "Phoenix Bot Commands", description = "Commands for Phoenix Bot ALPHA", color = discord.Color.red())
 
     embed.add_field(name = "p/help", value = "Sends this message", inline = False)
@@ -48,6 +49,15 @@ async def setadminrole(ctx, role): # sets the admin role
             await ctx.send("Set admin role to " + str(admin))
     else:
         await ctx.send("bruh you don't own the server what are you doing???")
+
+@client.command()
+async def adminrole(ctx): # checks the admin role
+    global admin
+    
+    if admin in ctx.author.roles or ctx.message.author == ctx.guild.owner:
+        await ctx.send("The admin role for this server is " + str(admin))
+    else:
+        await ctx.send("You're not an admin!")
 
 @client.command()
 async def setmodlog(ctx, channel): # sets the moderator logging channel
@@ -280,8 +290,14 @@ client.run("NjkyNTQzMTgxMjAzNDM5NzI2.XnwDyQ.o5lK10THOO-zhqX1ha3nOBiLNA4")
 
 
 
-# Current Version: ALPHA
+# Current Version: ALPHA 1.0
 
 
 
-# UPDATE LOG AND HISTORY:
+# HISTORY:
+# 4/11/20: Update ALPHA 1.0 deployed
+
+
+
+# UPDATE LOG:
+# ALPHA 1.0: Included basic moderation commands (kick, ban, unban, clear, mute, and unmute), created join messages in a channel and in DM, as well as leave messages, and added role and channel settings
