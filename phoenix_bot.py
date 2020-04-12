@@ -24,13 +24,25 @@ async def help(ctx): # sends an embedded list of all commands
     embed = discord.Embed(title = "Phoenix Bot Commands", description = "Commands for Phoenix Bot ALPHA", color = discord.Color.red())
 
     embed.add_field(name = "p/help", value = "Sends this message", inline = False)
-    embed.add_field(name = "p/setadminrole (OWNERS ONLY)", value = "Sets the admin role for them to use moderation commands", inline = False)
-    embed.add_field(name = "p/setmodlog (OWNERS ONLY)", value = "Sets the moderator logging channel", inline = False)
-    embed.add_field(name = "p/setmutedrole (OWNERS ONLY)", value = "Sets the muted role", inline = False)
+    
+    embed.add_field(name = "p/setadminrole (OWNER ONLY)", value = "Sets the admin role for them to use moderation commands", inline = False)
+    embed.add_field(name = "p/adminrole (ADMINS ONLY", value = "Checks the admin role", inline = False)
+    
+    embed.add_field(name = "p/setmodlog (OWNER ONLY)", value = "Sets the moderator logging channel", inline = False)
+    embed.add_field(name = "p/modlog (ADMINS ONLY)", value = "Checks the moderator logging channel", inline = False)
+    
+    embed.add_field(name = "p/setmutedrole (OWNER ONLY)", value = "Sets the muted role", inline = False)
+    embed.add_field(name = "p/mutedrole (ADMINS ONLY)", value = "Checks the muted role", inline = False)
+    
+    embed.add_field(name = "p/setwelcomechannel (OWNER ONLY)", value = "Sets the welcome channel for the server", inline = False)
+    embed.add_field(name = "p/welcomechannel (ADMINS ONLY)", value = "Checks the welcome channel", inline = False)
+    
     embed.add_field(name = "p/kick {member mention} {reason} (ADMINS ONLY)", value = "Kicks a member from the server", inline = False)
     embed.add_field(name = "p/ban {member mention} {reason} (ADMINS ONLY)", value = "Bans a member from the server", inline = False)
     embed.add_field(name = "p/unban {name and discriminator} {reason} (ADMINS ONLY)", value = "Unbans a member", inline = False)
+                    
     embed.add_field(name = "p/clear {amount} (ADMINS ONLY)", value = "Clears a set amount of messages", inline = False)
+    
     embed.add_field(name = "p/mute {member mention} (ADMINS ONLY)", value = "Mutes a member", inline = False)
     embed.add_field(name = "p/unmute {member mention} (ADMINS ONLY)", value = "Unmutes a member", inline = False)
 
@@ -72,6 +84,15 @@ async def setmodlog(ctx, channel): # sets the moderator logging channel
         await ctx.send("bruh you don't own the server what are you doing???")
 
 @client.command()
+async def modlog(ctx): # checks the moderator logging channel
+    global modlog
+
+    if admin in ctx.author.roles or ctx.message.author == ctx.guild.owner:
+        await ctx.send("The moderator logging channel for this server is " + str(modlog))
+    else:
+        await ctx.send("You're not an admin!")
+
+@client.command()
 async def setmutedrole(ctx, role): # sets the muted role
     if ctx.message.author == ctx.guild.owner:
         if role == None:
@@ -84,6 +105,15 @@ async def setmutedrole(ctx, role): # sets the muted role
         await ctx.send("bruh you don't own the server what are you doing???")
 
 @client.command()
+async def mutedrole(ctx): # checks the muted role
+    global muted
+
+    if admin in ctx.author.roles or ctx.message.author == ctx.guild.owner:
+        await ctx.send("The muted role for this server is " + str(muted))
+    else:
+        await ctx.send("You're not an admin!")
+
+@client.command()
 async def setwelcomechannel(ctx, channel): # sets the welcome channel
     if ctx.message.author == ctx.guild.owner:
         if channel == None:
@@ -94,6 +124,15 @@ async def setwelcomechannel(ctx, channel): # sets the welcome channel
             await ctx.send("Set welcome channel to " + str(welcome))
     else:
         await ctx.send("bruh you don't own the server what are you doing???")
+
+@client.command()
+async def welcomechannel(ctx): # checks the welcome channel
+    global welcome
+
+    if admin in ctx.author.roles or ctx.message.author == ctx.guild.owner:
+        await ctx.send("The welcome channel for this server is " + str(welcome))
+    else:
+        await ctx.send("You're not an admin!")
     
 @client.command()
 async def kick(ctx, member : discord.Member = None, *, reason = None): # kicks a mentioned member
