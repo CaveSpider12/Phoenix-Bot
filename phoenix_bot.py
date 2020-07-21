@@ -325,7 +325,7 @@ async def on_member_remove(ctx): # done when a member leaves the server
 
 
 # CLIENT TOKEN
-client.run("NjkyNTQzMTgxMjAzNDM5NzI2.XnwDyQ.o5lK10THOO-zhqX1ha3nOBiLNA4")
+# REDACTED
 
 
 
